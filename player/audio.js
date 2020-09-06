@@ -1,4 +1,4 @@
-const url = 'http://localhost/audio/teste1/api/';
+const url = 'http://localhost/Spotifree/player/api/';
 
 let musica = document.getElementById("musica");
 let player = document.getElementById("player");
