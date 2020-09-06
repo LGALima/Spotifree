@@ -1,5 +1,12 @@
 const url = 'http://localhost/Spotifree/player/api/';
 
+let htmlTelaArtistas = document.getElementById('tela-artistas');
+let htmlArtistas = document.getElementById('artistas');
+let htmlTelaAlbuns = document.getElementById('tela-albuns');
+let htmlAlbuns = document.getElementById('albuns');
+let htmlTelaMusicas = document.getElementById('tela-musicas');
+let htmlMusicas = document.getElementById('musicas');
+
 let musica = document.getElementById("musica");
 let player = document.getElementById("player");
 
@@ -14,45 +21,115 @@ let descricaoMusica = document.getElementById('descricao-musica');
 let btnPlayerPlay = document.getElementById('player-play');
 let btnPlayerPause = document.getElementById('player-pause');
 
-let srcMusicas = [];
+let musicasAtuais = [];
+let musicasRecebidas = [];
 
-let musicaAtual = 0;
+let albunsRecebidos = [];
+let albumAtual;
+
+let artistasRecebidos = []
+let artistaAtual;
+
+let indexMusicaAtual = 0;
 let clickouBarraTempo = 0;
 let isNotTocando;
 
-/** teste de conexão com outro arquvio php */
-var xhttp = new XMLHttpRequest();
-// após ser feito a requisição
-xhttp.onreadystatechange = function () {
-    if (this.readyState == 4 && this.status == 200) {
-        srcMusicas = JSON.parse(xhttp.responseText); // resposta da requisição (echo do php);
-        console.log(JSON.parse(xhttp.responseText))
-        atualizarInfoMusica();
-    }
-};
 
 // Buscar musicas por album
-function getMusicasPorAlbum() {
-    xhttp.open("GET", url + "getMusicasPorAlbum.php?idAlbum=1", true);
+/** Teste recuperar musicas por album */
+function getMusicasPorAlbum(idAlbum) {
+    let xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+            musicasRecebidas = JSON.parse(xhttp.responseText); // resposta da requisição (echo do php);
+            escolherAlbumOuPlaylist();
+        }
+    };
+    xhttp.open("GET", url + "getMusicasPorAlbum.php?idAlbum=" + idAlbum, true);
     xhttp.send();
-    /** MANDAR COM POST
-     * xhttp.open("POST", "http://localhost/audio/teste1/api/getMusicasPorAlbum.php", true);
-    xhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-    xhttp.send('idAlbum=1');
-     */
 }
 
-getMusicasPorAlbum();
+// Buscar albuns por artista
+/** Teste recuperar albuns por artista */
+function getAlbunsPorArtista(idArtista) {
+    let xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+            albunsRecebidos = JSON.parse(xhttp.responseText); // resposta da requisição (echo do php);
+            gerarAlbuns();
+            htmlTelaAlbuns.scrollIntoView();
+        }
+    };
+    xhttp.open("GET", url + "getAlbunsPorArtista.php?idArtista=" + idArtista, true);
+    xhttp.send();
+}
+
+function gerarAlbuns() {
+    htmlAlbuns.innerHTML = '';
+    albunsRecebidos.forEach(album => {
+        htmlAlbuns.innerHTML +=
+            '<div class="container separador pb-2 pt-2">' +
+            '<div class="row">' +
+            '<div class="album-foto">' +
+            '<img class="rounded-circle" src="data:image/png;base64,' + album.capa + '" alt="">' +
+            '</div>' +
+            '<div class="album-info">' +
+            'Album: <span class="album-nome">' + album.titulo_album + '</span><br>' +
+            'Ano de lançamento: <span class="album-lancamento">' + album.ano_lancamento + '</span><br>' +
+            '<span class="album-ir-para" onclick="getMusicasPorAlbum(' + album.id_album + ')">Ouvir album</span>' +
+            '</div>' +
+            '</div>' +
+            '</div>'
+    });
+}
+
+// Buscar artistas
+/** Teste recuperar artista */
+function getArtistas() {
+    let xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+            artistasRecebidos = JSON.parse(xhttp.responseText); // resposta da requisição (echo do php);
+            gerarArtistas();
+        }
+    };
+    xhttp.open("GET", url + "getArtistas.php?", true);
+    xhttp.send();
+}
+
+function gerarArtistas() {
+    htmlArtistas.innerHTML = '';
+    artistasRecebidos.forEach(artista => {
+        htmlArtistas.innerHTML +=
+            '<div class="container separador pb-2 pt-2">' +
+            '<div class="row">' +
+            '<div class="artista-foto">' +
+            '<img class="rounded-circle" src="data:image/png;base64,' + artista.imagem_artista + '" alt="">' +
+            '</div>' +
+            '<div class="artista-info">' +
+            'Artista: <span class="artista-nome">' + artista.artista + '</span><br>' +
+            'Total ouvintes: <span class="artista-ouvintes">' + numberWithCommas(artista.total_ouvintes) + '</span><br>' +
+            '<span class="artista-ir-para" onclick="getAlbunsPorArtista(' + artista.id_artista + ')">Ver albuns artista</span>' +
+            '</div>' +
+            '</div>' +
+            '</div>'
+    });
+}
+function numberWithCommas(x) {
+    return x.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, "\.");
+}
+getArtistas();
+
 
 function trocarMusica(avancar) {
-    if (avancar && musicaAtual + 1 < srcMusicas.length) {
-        musicaAtual++;
-    } else if (!avancar && musicaAtual - 1 >= 0) {
-        musicaAtual--;
+    if (avancar && indexMusicaAtual + 1 < musicasAtuais.length) {
+        indexMusicaAtual++;
+    } else if (!avancar && indexMusicaAtual - 1 >= 0) {
+        indexMusicaAtual--;
     } else if (avancar) {
-        musicaAtual = 0;
+        indexMusicaAtual = 0;
     } else if (!avancar) {
-        musicaAtual = srcMusicas.length - 1;
+        indexMusicaAtual = musicasAtuais.length - 1;
     }
 
     atualizarInfoMusica();
@@ -61,19 +138,19 @@ function trocarMusica(avancar) {
 
 function playMusica() {
     if (!musica.src) {
-        alert('escolha uma musica');
+        alert('escolha um album/playlist');
         return;
     }
 
     musica.play();
-    btnPlayerPlay.style.display = 'none';
-    btnPlayerPause.style.display = 'inline';
+    btnPlayerPlay.hidden = true;
+    btnPlayerPause.hidden = false;
 };
 
 function pausarMusica() {
     musica.pause();
-    btnPlayerPlay.style.display = 'inline';
-    btnPlayerPause.style.display = 'none';
+    btnPlayerPlay.hidden = false;
+    btnPlayerPause.hidden = true;
 };
 
 function converterSegundosParaMinutoSegundo(segundos) {
@@ -90,20 +167,28 @@ function converterSegundosParaMinutoSegundo(segundos) {
 }
 
 function atualizarInfoMusica() {
-    musica.src = 'data:audio/mp3;base64,' + srcMusicas[musicaAtual].musica;
-    capaAlbum.src = 'data:image/jpeg;base64,' + srcMusicas[musicaAtual].capa;
-    descricaoMusica.innerHTML = srcMusicas[musicaAtual].titulo_musica + '<br>' + srcMusicas[musicaAtual].titulo_album + '<br>' + srcMusicas[musicaAtual].artista;
+    musica.src = 'data:audio/mp3;base64,' + musicasAtuais[indexMusicaAtual].musica;
+    capaAlbum.src = 'data:image/png;base64,' + musicasAtuais[indexMusicaAtual].capa;
+    descricaoMusica.innerHTML = musicasAtuais[indexMusicaAtual].titulo_musica + '<br>' + musicasAtuais[indexMusicaAtual].titulo_album + '<br>' + musicasAtuais[indexMusicaAtual].artista;
 }
 
+function escolherAlbumOuPlaylist() {
+    indexMusicaAtual = 0;
+    musicasAtuais = JSON.parse(JSON.stringify(musicasRecebidas));
+    atualizarInfoMusica();
+    playMusica();
+}
 
-musica.addEventListener('timeupdate', () => {
+function atualizarTempo() {
     tempoBarraTocado.style.width = (musica.currentTime / musica.duration * 100) + '%';
     if (musica.currentTime >= musica.duration) {
         trocarMusica(true);
     }
     tempoTocado.innerText = converterSegundosParaMinutoSegundo(musica.currentTime);
     tempoTotal.innerText = converterSegundosParaMinutoSegundo(musica.duration);
-});
+}
+
+musica.addEventListener('timeupdate', atualizarTempo);
 
 musica.addEventListener('pause', () => {
     pausarMusica();
@@ -127,10 +212,11 @@ document.addEventListener('mousemove', () => {
 });
 
 document.addEventListener('mouseup', () => {
-    if(clickouBarraTempo === 1) {
+    if (clickouBarraTempo === 1) {
         clickouBarraTempo = 0;
-        if(!isNotTocando) {
+        if (!isNotTocando) {
             playMusica();
         }
     }
 });
+

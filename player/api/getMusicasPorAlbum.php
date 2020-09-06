@@ -13,10 +13,10 @@
     WHERE m.id_album=:idAlbum;', 
     [':idAlbum'], [$idAlbum]);
 
-    $musicasJson = [];
-    foreach($musicas as $musica) {
-        array_push($musicasJson, $musica);
-    }
+    // $musicasJson = [];
+    // foreach($musicas as $musica) {
+    //     array_push($musicasJson, $musica);
+    // }
 
-    echo json_encode($musicasJson, JSON_PRETTY_PRINT);
+    echo json_encode($musicas, JSON_PRETTY_PRINT);
 ?>
