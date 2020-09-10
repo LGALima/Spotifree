@@ -13,7 +13,7 @@ body
 
 .container
 {
-  padding: 70px 0;
+  padding: 60px 0;
 }
 
 p, li
@@ -44,7 +44,7 @@ header, .navbar
 {
   margin-top:7px;
   margin-bottom:7px;
-  margin-left: 85px;
+  margin-left: 90px;
   padding: 0;
   color: #fff;
 }
@@ -317,8 +317,8 @@ header, .navbar
 
 .contact-box
 {
-  padding-bottom: 40px;
-  margin-bottom: 40px;
+  padding-bottom: 30px;
+  margin-bottom: 30px;
   border-bottom: 1px solid #00FF99;
 }
 
@@ -331,7 +331,7 @@ header, .navbar
   height: 55px;
   line-height: 55px;
   font-size: 24px;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
 }
 
 .contact-box i:hover
@@ -366,12 +366,12 @@ textarea
 .main-btn
 {
   width: 120px;
-  height: 50px;
+  height: 45px;
   background-color: #00FF99;
   color: #fff;
   font-weight: 700;
   text-transform: uppercase;
-  padding: 11px 20px;
+  padding: 8px 20px;
   border-radius: 40px;
   border: 3px solid transparent;
   transition: .5s;
@@ -399,7 +399,7 @@ textarea
 
 #copy-area p
 {
-  margin-top: 15px;
+  margin: 10px;
   color: #fff;
   text-align: center;
   font-weight: 300;
