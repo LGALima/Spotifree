@@ -8,7 +8,7 @@ class Sql{
         $this->conection = new \PDO('mysql:host=localhost;dbname=spotfree;', 'root', '');
     }
 
-    // Espera a query, os parametros em ? ou :parametro e seus respectivos valores
+    // Espera a query, os parametros em :parametro e seus respectivos valores
     public function query($query, $parametros, $binds){
         $consulta = $this->conection->prepare($query);
         for($i = 0; $i < count($parametros); $i++){

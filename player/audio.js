@@ -2,7 +2,7 @@ const url = 'http://localhost/Spotifree/player/api/';
 
 let htmlTelaArtistas = document.getElementById('tela-artistas');
 let htmlArtistas = document.getElementById('artistas');
-let htmlTelaAlbuns = document.getElementById('tela-albuns');
+let htmlTelaPaginaArtista = document.getElementById('tela-pagina-artista');
 let htmlAlbuns = document.getElementById('albuns');
 let htmlTelaMusicas = document.getElementById('tela-musicas');
 let htmlMusicas = document.getElementById('musicas');
@@ -21,7 +21,7 @@ let descricaoMusica = document.getElementById('descricao-musica');
 let btnPlayerPlay = document.getElementById('player-play');
 let btnPlayerPause = document.getElementById('player-pause');
 
-let musicasAtuais = [];
+let musicasFilaDeReproducao = [];
 let musicasRecebidas = [];
 
 let albunsRecebidos = [];
@@ -51,16 +51,16 @@ function getMusicasPorAlbum(idAlbum) {
 
 // Buscar albuns por artista
 /** Teste recuperar albuns por artista */
-function getAlbunsPorArtista(idArtista) {
+function getAlbunsPorArtista(artista) {
     let xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200) {
             albunsRecebidos = JSON.parse(xhttp.responseText); // resposta da requisição (echo do php);
             gerarAlbuns();
-            htmlTelaAlbuns.scrollIntoView();
+            htmlTelaPaginaArtista.scrollIntoView();
         }
     };
-    xhttp.open("GET", url + "getAlbunsPorArtista.php?idArtista=" + idArtista, true);
+    xhttp.open("GET", url + "getAlbunsPorArtista.php?idArtista=" + artista.id, true);
     xhttp.send();
 }
 
@@ -74,9 +74,9 @@ function gerarAlbuns() {
             '<img class="rounded-circle" src="data:image/png;base64,' + album.capa + '" alt="">' +
             '</div>' +
             '<div class="album-info">' +
-            'Album: <span class="album-nome">' + album.titulo_album + '</span><br>' +
-            'Ano de lançamento: <span class="album-lancamento">' + album.ano_lancamento + '</span><br>' +
-            '<span class="album-ir-para" onclick="getMusicasPorAlbum(' + album.id_album + ')">Ouvir album</span>' +
+            'Album: <span class="album-nome">' + album.titulo + '</span><br>' +
+            'Ano de lançamento: <span class="album-lancamento">' + album.lancamento + '</span><br>' +
+            '<span class="album-ir-para" onclick="getMusicasPorAlbum(' + album.id + ')">Ouvir album</span>' +
             '</div>' +
             '</div>' +
             '</div>'
@@ -100,36 +100,38 @@ function getArtistas() {
 function gerarArtistas() {
     htmlArtistas.innerHTML = '';
     artistasRecebidos.forEach(artista => {
-        htmlArtistas.innerHTML +=
-            '<div class="container separador pb-2 pt-2">' +
-            '<div class="row">' +
-            '<div class="artista-foto">' +
-            '<img class="rounded-circle" src="data:image/png;base64,' + artista.imagem_artista + '" alt="">' +
-            '</div>' +
-            '<div class="artista-info">' +
-            'Artista: <span class="artista-nome">' + artista.artista + '</span><br>' +
-            'Total ouvintes: <span class="artista-ouvintes">' + numberWithCommas(artista.total_ouvintes) + '</span><br>' +
-            '<span class="artista-ir-para" onclick="getAlbunsPorArtista(' + artista.id_artista + ')">Ver albuns artista</span>' +
-            '</div>' +
-            '</div>' +
-            '</div>'
+        let htmlCardArtista = document.createElement('div');
+        htmlCardArtista.classList.add('pt-4', 'col-xl-3', 'col-lg-4', 'col-md-4', 'col-sm-6', 'col-12', 'text-center');
+        htmlArtistas.appendChild(htmlCardArtista);
+
+        let htmlImgArtista = document.createElement('img');
+        htmlImgArtista.classList.add('rounded-circle', 'artistas-foto-artista');
+        htmlImgArtista.src = 'data:image/png;base64,' + artista.imagemArtista;
+        htmlImgArtista.addEventListener('click', () => getAlbunsPorArtista(artista));
+        htmlCardArtista.appendChild(htmlImgArtista);
+
+        let htmlNomeArtista = document.createElement('div');
+        htmlNomeArtista.classList.add('mt-3', 'artistas-nome-artista');
+        htmlNomeArtista.addEventListener('click', () => getAlbunsPorArtista(artista));
+        htmlNomeArtista.innerText = artista.artista;
+        htmlCardArtista.appendChild(htmlNomeArtista);
     });
 }
-function numberWithCommas(x) {
+function formatarNumeroComPonto(x) {
     return x.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, "\.");
 }
 getArtistas();
 
 
 function trocarMusica(avancar) {
-    if (avancar && indexMusicaAtual + 1 < musicasAtuais.length) {
+    if (avancar && indexMusicaAtual + 1 < musicasFilaDeReproducao.length) {
         indexMusicaAtual++;
     } else if (!avancar && indexMusicaAtual - 1 >= 0) {
         indexMusicaAtual--;
     } else if (avancar) {
         indexMusicaAtual = 0;
     } else if (!avancar) {
-        indexMusicaAtual = musicasAtuais.length - 1;
+        indexMusicaAtual = musicasFilaDeReproducao.length - 1;
     }
 
     atualizarInfoMusica();
@@ -167,14 +169,14 @@ function converterSegundosParaMinutoSegundo(segundos) {
 }
 
 function atualizarInfoMusica() {
-    musica.src = 'data:audio/mp3;base64,' + musicasAtuais[indexMusicaAtual].musica;
-    capaAlbum.src = 'data:image/png;base64,' + musicasAtuais[indexMusicaAtual].capa;
-    descricaoMusica.innerHTML = musicasAtuais[indexMusicaAtual].titulo_musica + '<br>' + musicasAtuais[indexMusicaAtual].titulo_album + '<br>' + musicasAtuais[indexMusicaAtual].artista;
+    musica.src = 'data:audio/mp3;base64,' + musicasFilaDeReproducao[indexMusicaAtual].musica;
+    capaAlbum.src = 'data:image/png;base64,' + musicasFilaDeReproducao[indexMusicaAtual].album.capa;
+    descricaoMusica.innerHTML = musicasFilaDeReproducao[indexMusicaAtual].titulo + '<br>' + musicasFilaDeReproducao[indexMusicaAtual].album.titulo + '<br>' + musicasFilaDeReproducao[indexMusicaAtual].album.artista.artista;
 }
 
 function escolherAlbumOuPlaylist() {
     indexMusicaAtual = 0;
-    musicasAtuais = JSON.parse(JSON.stringify(musicasRecebidas));
+    musicasFilaDeReproducao = JSON.parse(JSON.stringify(musicasRecebidas));
     atualizarInfoMusica();
     playMusica();
 }

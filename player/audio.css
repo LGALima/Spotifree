@@ -9,40 +9,50 @@ body {
     overflow-y: hidden;
 }
 
-.separador {
-    border-bottom: 1px solid #00FF99;
+::-webkit-scrollbar-track 
+{
+  background:transparent;
+  border: thin solid transparent;
+  box-shadow: 0px 0px 3px transparent inset;
+  border-radius: 10px;
+}
+
+input {
+    border: none;
+    padding: 3px 5px;
+    color: white;
+    width: 300px;
+    outline: none;
+    background-color: #303030;
+}
+
+.menu {
+    width: 150px;
+    height: calc(100% - 80px);
+    float: left;
+    background-color: #000000;
+    position: fixed;
+}
+
+.conteudo {
+    height: calc(100% - 80px);
+    width: calc(100% - 150px);
+    margin-left: 150px;
 }
 
 .tela {
-    height: calc( 100% );
-    padding-bottom: 80px;
-    background-color: rgb(29, 29, 29);
+    height: 100%;
+    margin-bottom: 80px;
+    background: linear-gradient(0deg,#080808 75%, #3f3f3f 100%);
     overflow-y: auto;
 }
 
-/** ARTISTA CSS */
-.artista-info {
-    margin-left: 20px;
-    float: left;
-}
-
-.artista-foto {
-    float: left;
-    width: 80px;
-    height: 80px;
-}
-
-.artista-foto img {
-    width: 80px;
-    height: 80px;
-}
-
-.artista-ouvintes {
-    display: inline-block
-}
-
-.artista-ir-para {
-    cursor: pointer;
+/** PAGINA ARTISTA CSS*/
+.artista-nome-titulo {
+    font-size: 36px;
+    padding-top: 70px;
+    border-bottom: 1px rgba(223, 223, 223, 0.658) solid;
+    height: 125px;
 }
 
 /** ALBUM CSS */
@@ -70,15 +80,48 @@ body {
     cursor: pointer;
 }
 
+
+/** ARTISTAS CSS */
+
+.artistas-titulo-artista {
+    font-size: 36px;
+    padding-top: 70px;
+    border-bottom: 1px rgba(223, 223, 223, 0.658) solid;
+    height: 125px;
+}
+
+.artistas-filtros-pesquisa {
+    padding: 20px 0px;
+    height: 100px;
+    border-bottom: 1px rgba(223, 223, 223, 0.658) solid;
+}
+
+.artistas-nome-artista {
+    color: #00FF99;
+}
+
+.artistas-nome-artista:hover {
+    text-decoration: underline;
+    cursor: pointer;
+    color: #00c978;
+}
+
+.artistas-foto-artista {
+    width: 150px;
+    height: 150px;
+}
+
+.artistas-foto-artista:hover {
+    cursor: pointer;
+    opacity: 0.5;
+}
+
 /** PLAYER CSS */
 .player {
     position: fixed;
-    margin-left: 100px;
-    bottom: 0px;
-    right: 0px;
     width: 100%;
     height: 80px;
-    background-color: rgb(0, 0, 0);
+    background-color: #1b1b1b;
     user-select: none;
 }
 .player .icon-circle {
@@ -137,7 +180,8 @@ body {
     height: 80px;
     text-align: center;
     float: left;
-    padding: 10px;
+    padding: 10px; 
+    border: none;
 }
 
 .player .info-musica #descricao-musica {
