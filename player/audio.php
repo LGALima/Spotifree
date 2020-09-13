@@ -1,9 +1,9 @@
 <?php
 session_start();
-$_SESSION['usuario'] = 'Kikokrazy';
+$_SESSION['idUsuario'] = 1;
 $_SESSION['nome'] = 'Lucas';
 
-$nome = $_SESSION['usuario'];
+$idUsuario = $_SESSION['idUsuario'];
 ?>
 
 <!DOCTYPE html>
@@ -11,10 +11,9 @@ $nome = $_SESSION['usuario'];
 
 <head>
     <script type="text/javascript">
-        let a = '<?php echo $nome ?>';
-        console.log(a);
+        let idUsuario = '<?php echo $idUsuario ?>';
     </script>
-    
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
@@ -22,7 +21,7 @@ $nome = $_SESSION['usuario'];
     <link rel="stylesheet" href="../styleGeral.css">
     <link rel="stylesheet" href="audio.css">
     <script src="https://kit.fontawesome.com/1923c790bd.js" crossorigin="anonymous"></script>
-    </head>
+</head>
 
 <body>
     <!-- ARTISTAS -->
@@ -32,8 +31,8 @@ $nome = $_SESSION['usuario'];
     <div class="conteudo">
         <div id="tela-artistas" class="tela text-white">
             <!-- Header artistas -->
-            <div class="container">
-                <div class="row">
+            <div class="container-fluid">
+                <div class="row fundo-header">
                     <div class="col-12 artistas-titulo-artista">
                         Artistas
                     </div>
@@ -41,7 +40,7 @@ $nome = $_SESSION['usuario'];
                 <!-- Pesquisa de artistas -->
                 <div class="row">
                     <div class="col-12 artistas-filtros-pesquisa">
-                        <i class="fa fa-search"></i>
+                        <i id="btn-pesquisar-artistas" class="fa fa-search"></i>
                         <input type="text" id="input-pesquisar-artistas" placeholder="Filtrar">
                     </div>
                 </div>
@@ -51,12 +50,14 @@ $nome = $_SESSION['usuario'];
         </div>
 
         <div id="tela-pagina-artista" class="tela text-white">
-            <div class="container">
-                <div class="row">
-                    <div class="col-12 artista-nome-titulo">BANDA</div>
+            <div class="container-fluid">
+                <div class="row fundo-header">
+                    <div class="col-12 artista-nome-titulo" id="nome-artista">Artista não selecionado</div>
                 </div>
                 <a href="#tela-artistas">Voltar</a>
-                <div id="albuns">Nenhum album selecionado</div>
+                <div id="albuns" class="row album">
+
+                </div>
             </div>
         </div>
     </div>

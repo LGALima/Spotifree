@@ -26,6 +26,22 @@ input {
     background-color: #303030;
 }
 
+table {
+    width: 100%;
+}
+
+tr {
+    border-bottom: rgb(255, 255, 255, .25) solid 0.5px;
+}
+
+td {
+    padding: 0px 10px;
+}
+
+th {
+    padding: 0px 10px;
+}
+
 .menu {
     width: 150px;
     height: calc(100% - 80px);
@@ -43,7 +59,7 @@ input {
 .tela {
     height: 100%;
     margin-bottom: 80px;
-    background: linear-gradient(0deg,#080808 75%, #3f3f3f 100%);
+    background: #080808;
     overflow-y: auto;
 }
 
@@ -55,29 +71,73 @@ input {
     height: 125px;
 }
 
+.fundo-header {
+    background: linear-gradient(0deg,#080808 10%, #3f3f3f 100%);
+}
+
 /** ALBUM CSS */
+
+.album {
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+.album-header {
+    width: 100%; 
+    height: 150px; 
+    padding: 12.5px 0px;
+}
+
+.album-imagem-album {
+    width: 125px; 
+    height: 125px; 
+    float: left;
+}
+
+.album-imagem-album:hover {
+    opacity: 0.5;
+}
+
+.album-imagem-album img {
+    width: 125px; 
+    height: 125px;
+}
+
+.album-body {
+    margin-bottom: 30px;
+}
+
 .album-info {
-    margin-left: 20px;
-    float: left;
-}
-
-.album-foto {
-    float: left;
-    width: 80px;
-    height: 80px;
-}
-
-.album-foto img {
-    width: 80px;
-    height: 80px;
+    width: calc(100% - 125px);
+    padding-left: 12.5px; 
+    padding-right: 12.5px; 
+    height: 125px; 
+    float: left; 
 }
 
 .album-lancamento {
-    display: inline-block
+    font-size: 12px;
+    color: rgb(177, 177, 177);
 }
 
-.album-ir-para {
-    cursor: pointer;
+.album-titulo {
+    font-size: 28px;
+}
+
+.album-tabela-indice{
+    width: 40px;
+}
+
+.album-tabela-like{
+    width: 40px;
+}
+
+.album-tabela-titulo{
+    width: auto;
+}
+
+.album-tabela-tempo{
+    width: 80px;
 }
 
 
