@@ -9,6 +9,7 @@ $(document).ready(function()
   //Scroll para seções
   let btnScroll = $('.slow-scroll');
 
+  let inicioPagina = $('#nav-container');
   let contactSection = $('#contact-area');
   let freeInfo = $('#informacao-free');
   let proInfo = $('#informacao-pro');
@@ -30,10 +31,16 @@ $(document).ready(function()
     {
       scrollTo = proInfo;
     }
+    else if(btnId == 'inicio-menu')
+    {
+      scrollTo = inicioPagina;
+    }
     
     $([document.documentElement, document.body]).animate(
     {
       scrollTop: $(scrollTo).offset().top - 70
     }, 750);
   });
+
+  $('img').on('dragstart', function(event) { event.preventDefault(); });
 });
