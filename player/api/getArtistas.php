@@ -7,13 +7,13 @@ require_once('./sql.php');
 $sql = new Sql();
 if ((bool) $pesquisa) {
     $artistas = $sql->query(
-        "SELECT * FROM artistas WHERE artista LIKE :pesquisa",
+        "SELECT * FROM artistas WHERE artista LIKE :pesquisa ORDER BY artista",
         [':pesquisa'],
         ["%" . $pesquisa . "%"]
     );
 } else {
     $artistas = $sql->query(
-        'SELECT * FROM artistas',
+        'SELECT * FROM artistas  ORDER BY artista',
         [],
         []
     );

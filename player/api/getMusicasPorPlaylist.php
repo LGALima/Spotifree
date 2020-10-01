@@ -1,27 +1,31 @@
 <?php 
     include '../models/Musica.model.php';
+    $idPlaylist = $_GET['idPlaylist'];
     $idUsuario = $_GET['idUsuario'];
-    $idMusica = $_GET['idMusica'];
 
     require_once('./sql.php');
     $sql = new Sql();
     $musicas = $sql->query('SELECT DISTINCT *
-    FROM musicas as m 
+    FROM musica_playlist as mp
+    INNER JOIN musicas as m
+    ON mp.id_musica = m.id_musica
     INNER JOIN albuns as alb 
     ON m.id_album = alb.id_album
     INNER JOIN artistas as art
-    ON alb.id_artista = art.id_artista WHERE id_musica = :idMusica',
-    ['idMusica'], [$idMusica]);
-
+    ON alb.id_artista = art.id_artista
+    WHERE id_playlist = :idPlaylist',
+    ['idPlaylist'], [$idPlaylist]);
 
     $musicasLike = $sql->query('SELECT * 
     FROM musicas_like
     WHERE id_usuario = :idUsuario',
      [':idUsuario'], [$idUsuario]);
 
-     foreach($musicas as $musica) {
+    $musicasJson = [];
+    foreach($musicas as $musica) {
         $musicaJson = new Musica();
         $musicaJson->id = $musica->id_musica;
+        $musicaJson->idMusicaPlaylist = $musica->id_musica_playlist;
         $musicaJson->titulo = $musica->titulo_musica;
         $musicaJson->musica = $musica->musica;
         $musicaJson->tempo = $musica->tempo;
@@ -41,7 +45,7 @@
                 break;
             }
         }
+        array_push($musicasJson, $musicaJson);
     }
-    echo json_encode($musicaJson, JSON_PRETTY_PRINT);
 
-?>
+    echo json_encode($musicasJson, JSON_PRETTY_PRINT);

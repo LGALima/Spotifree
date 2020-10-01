@@ -1,5 +1,6 @@
 html {
     height: 100%;
+    user-select: none;
 }
 
 body {
@@ -42,25 +43,164 @@ th {
     padding: 0px 10px;
 }
 
-.menu {
-    width: 150px;
-    height: calc(100% - 80px);
-    float: left;
-    background-color: #000000;
-    position: fixed;
-}
-
 .conteudo {
     height: calc(100% - 80px);
-    width: calc(100% - 150px);
-    margin-left: 150px;
+    width: calc(100% - 200px);
+    margin-left: 200px;
+}
+
+.navbar-perfil {
+    height: 30px;
+    width: calc(100% - 200px);
+    margin-left: 200px;
+    line-height: 30px;
+    position: fixed;
+    background-color: black;
+    padding-right: 10px;
 }
 
 .tela {
     height: 100%;
     margin-bottom: 80px;
+    /* background-color: rgb(24, 24, 24); */
     background: #080808;
     overflow-y: auto;
+    padding-bottom: 30px;
+}
+
+.tela-transparente-overlay {
+    height: 100%;
+    width: 100%;
+    margin-bottom: 80px;
+    background: #0808089d;
+    overflow-y: auto;
+    right: 0px;
+    top: 0px;
+    position: fixed;
+    z-index: 999;
+}
+
+.criar-playlist-overlay {
+    width: 50%; 
+    height: auto; 
+    background-color: rgb(24, 24, 24);
+    left: 25%; 
+    bottom: 30%; 
+    position: absolute;
+}
+
+.criar-playlist-imagem {
+    margin: 10px 0px 30px 30px;
+    width: 200px;
+    height: 200px;
+    float: left;
+}
+
+.criar-playlist-form {
+    margin: 10px 0px 0px 30px;
+    width: calc(100% - 260px);
+    height: 200px;
+    float: left;
+}
+#criar-playlist-titulo {
+    width: calc(100% - 30px);
+}
+
+.criar-playlist-imagem img {
+    width: 100%;
+    height: 100%;
+}
+
+.adicionar-playlist-item {
+    padding: 2px 5px; font-size: 12px;
+}
+.adicionar-playlist-item:hover {
+    background-color: rgb(90, 90, 90);
+}
+.adicionar-playlist-dropdown {
+    max-width: 150px; 
+    max-height: 100px; 
+    background-color: rgb(63, 63, 63);
+    position: absolute; 
+    z-index: 9999; 
+    overflow-y: auto;
+}
+
+.adicionar-playlist-tela-transparente {
+    width: 100%; 
+    height: 100%; 
+    position: fixed; 
+    z-index: 9998; 
+    left: 0px; 
+    top: 0px;
+}
+
+/* NavbarPerfil */
+
+.navbar-perfil-tela-transparente {
+    width: 100%; 
+    height: 100%; 
+    position: fixed; 
+    z-index: 9998; 
+    left: 0px; 
+    top: 0px;
+}
+
+.navbar-perfil-dropdown {
+    width: auto;
+    background-color: rgb(63, 63, 63);
+    position: fixed;
+    right: 0;
+    top: 30px;
+    overflow-y: auto;
+}
+
+/* MENU */
+.menu {
+    width: 200px;
+    font-size: 16px;
+    height: calc(100% - 80px);
+    float: left;
+    background-color: #000000;
+    position: fixed;
+    padding-top: 20px;
+}
+
+.menu-item {
+    color: rgb(201, 201, 201);
+    padding-left: 20px;
+}
+
+.menu-cor {
+    color: rgb(201, 201, 201);
+    font-weight: 700;
+}
+.menu-cor:hover {
+    color: white;
+}
+
+.menu-para-voce {
+    color: rgb(201, 201, 201);
+    padding-left: 20px;
+    transition-delay: 0.2s;
+    transition: 0.1;
+}
+
+.menu-item:hover{
+    transition: 0.1;
+    border-left: 3px solid #00c978;
+}
+
+.menu-selecionado {
+    border-left: 3px solid #00c978;
+}
+
+.menu-nova-playlist {
+    width: 100%;
+    padding: 20px 0px 20px 20px;
+    border-top: rgb(255, 255, 255, .25) solid 0.5px;
+    position: absolute;
+    bottom: 0px;
 }
 
 /** PAGINA ARTISTA CSS*/
@@ -73,6 +213,37 @@ th {
 
 .fundo-header {
     background: linear-gradient(0deg,#080808 10%, #3f3f3f 100%);
+}
+
+/** PLAYLIST SELECIONADA **/
+
+.playlist-selecionada-header {
+    font-size: 36px;
+    padding-top: 30px;
+}
+.playlist-selecionada-imagem-header {
+    height: 200px; 
+    width: 200px; 
+    float: left;
+}
+.playlist-selecionada-imagem-header:hover {
+    opacity: 0.5;
+}
+.playlist-selecionada-imagem-header img {
+    height: 100%;
+    width: 100%;
+}
+
+.playlist-selecionada-titulo {
+    padding-left: 20px;
+    height: 200px;
+    width: calc(100% - 200px);
+    float: left;
+}
+
+.playlist-selecionada-titulo-nome {
+    bottom: 0px; 
+    position: absolute;
 }
 
 /** ALBUM CSS */
@@ -215,12 +386,20 @@ th {
 
 .player .tempo .tempo-barra-musica {
     display: inline-block;
+    transition-delay: 2s;
+    transition-duration: 0.15s;
     height: 3px;
     width: 70%;
     max-width: 350px;
     background-color: rgb(174, 175, 175);
     border-radius: 1px;
     margin-bottom: 3px;
+}
+
+.player .tempo .tempo-barra-musica:hover {
+    transition: 0.15s;
+    border-radius: 2px;
+    height: 5px;
 }
 
 .player .tempo .tempo-barra-musica .tempo-barra-tocado{
