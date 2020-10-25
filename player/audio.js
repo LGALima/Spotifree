@@ -1,5 +1,6 @@
 const url = 'http://localhost/Spotifree/player/api/';
 
+let htmlTelaPerfil = document.getElementById('tela-perfil');
 let htmlTelaArtistas = document.getElementById('tela-artistas');
 let htmlArtistas = document.getElementById('artistas');
 let htmlTelaPaginaArtista = document.getElementById('tela-pagina-artista');
@@ -26,6 +27,9 @@ let btnPesquisarArtistas = document.getElementById('btn-pesquisar-artistas')
 
 let criarPlaylistInputCapa = document.getElementById('criar-playlist-input-capa');
 let criarPlaylistCapa = document.getElementById('criar-playlist-img');
+
+let fotoPerfil = document.getElementById('foto-perfil');
+let fotoPerfilInput = document.getElementById('foto-perfil-input');
 
 function formatarNumeroComPonto(x) {
     return x.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, "\.");
@@ -73,6 +77,7 @@ htmlMenuNovaPlaylist.addEventListener('click', () => {
 
 htmlMenuPerfil.addEventListener('click', () => {
     selecionarMenu(htmlMenuPerfil);
+    htmlTelaPerfil.scrollIntoView();
 });
 
 htmlMenuInicio.addEventListener('click', () => {
@@ -133,4 +138,18 @@ function postNovaPlaylist(idUsuario, img, descricao) {
     xhttp.send(JSON.stringify(parametros));
 }
 
-htmlMenuArtistas.click();
+function carregarFotoPerfil(input) {
+    if (input.files && input.files[0]) {
+        var reader = new FileReader();
+        
+        reader.onload = function (e) {
+            fotoPerfil.src = e.target.result
+            console.log(criarPlaylistCapa.src);
+        };
+        reader.readAsDataURL(input.files[0]);
+    }
+}
+
+fotoPerfil.addEventListener('click', () => {
+    fotoPerfilInput.click();
+});
