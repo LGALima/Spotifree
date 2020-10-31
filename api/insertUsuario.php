@@ -1,6 +1,6 @@
 <?php
   $email = trim($_POST['email']);
-  $senha = crypt('senha');
+  $senha = md5($_POST['senha']);
   $nome = trim($_POST['nome']);
   $genero = trim($_POST['genero']);
   $premium = 'N';
@@ -11,6 +11,6 @@
     $sql = new Sql();
     $sql->query('INSERT INTO usuarios(email, senha, nome, genero, premium)
      VALUES(:email, :senha, :nome, :genero, :premium);',[':email', ':senha', ':nome', ':genero', ':premium'],[$email, $senha, $nome, $genero, $premium]);
-    header("location:../home/index.html");
+    header("location:../player/audio.php");
   }
 ?>

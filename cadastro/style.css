@@ -135,6 +135,7 @@ input[type='radio']:checked:after {
 
 .btn-cadastrar:hover
 {
+    transition: .5s;
     background-color: #fff;
     color: #00FF99;
     border-color: #00FF99;

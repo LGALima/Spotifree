@@ -1,0 +1,108 @@
+.bg-color
+{
+  background-color: #F9F9F9;
+}
+
+body
+{
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 300;
+}
+
+.form-cadastro
+{
+  height: 100vh;
+}
+
+.area-form
+{
+  margin-top: 45px;
+}
+
+.img-link
+{
+  width: 40%;
+  height: 40%;
+  cursor: pointer;
+}
+
+.main-txt
+{
+  font-size: 18px;
+  margin-top: 25px;
+  text-align: center;
+  line-height: 36px;
+  letter-spacing: -0.04em;
+  padding-bottom: 20px;
+  font-weight: 700;
+}
+
+.form-control:hover
+{
+  color:rgb(121, 121, 121);
+}
+
+.form-control:focus 
+{
+  border-color: #00FF99;
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px #00FF99;
+}
+
+.entrar-section
+{
+  padding: 20px;
+}
+
+.btn-login
+{
+  width: 100%;
+  height: 50px;
+  background-color: #00FF99;
+  color: #FFF;
+  text-transform: uppercase;
+  padding: 10px 20px;
+  border-radius: 40px;
+  border: 3px solid #00FF99;
+  transition: .5s;
+  font-weight: 700;
+}
+
+.btn-login:hover
+{
+  background-color: #fff;
+  color: #00FF99;
+  border-color: #00FF99;
+}
+
+.cadastro-section
+{
+  text-align: center;
+  padding: 20px;
+  font-weight: 700;
+}
+
+.button-area
+{
+  padding-top: 15px;
+}
+
+.btn-cadastro
+{
+  width: 100%;
+  height: 50px;
+  background-color: #ffffff;
+  color: #222222;
+  text-transform: uppercase;
+  padding: 10px 20px;
+  border-radius: 40px;
+  border: 2px solid #222222;
+  transition: .5s;
+  font-weight: 700;
+}
+
+.btn-cadastro:hover
+{
+  background-color: #222222;
+  color: #ffffff;
+  border-color: #222222;
+}

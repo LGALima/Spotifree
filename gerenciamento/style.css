@@ -1,0 +1,120 @@
+body
+{
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 300;
+}
+
+.bg-color
+{
+  background-color: #F9F9F9;
+}
+
+.main-cont, .main-div
+{
+  margin: 0px;
+}
+
+.icon-fa
+{
+  color: #00FF99;
+}
+
+.icon-fa:hover
+{
+  color: #212121;
+}
+
+.fa-microphone
+{
+  padding-left: 165px;
+}
+
+.fa-record-vinyl
+{
+  padding-left: 155px;
+}
+
+.fa-music
+{
+  padding-left: 160px;
+}
+
+.btn-dropd
+{
+  border-color: #212121;
+  color: #666666;
+}
+
+.btn-dropd:focus 
+{
+  border-color: #00FF99;
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px #00FF99;
+}
+
+.dropdown-menu
+{
+  width: 93%;
+}
+
+.dropdown-item:active
+{
+  background-color: #00ff99;
+}
+
+.area-selecao
+{
+  padding-left: 20px;
+}
+
+.form-control
+{
+  border-color: #212121;
+}
+
+.form-control:hover
+{
+  color:rgb(121, 121, 121);
+}
+
+.form-control:focus 
+{
+  border-color: #00FF99;
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px #00FF99;
+}
+
+.area-btn
+{
+  padding: 20px;
+  padding-left: 35px;
+  align-self: center;
+}
+
+.btn-form
+{
+  color: #212121;
+  padding: 5px 5px;
+  background-color: #00FF99;
+  border-color: #00FF99;
+  border-radius: 15px;
+  font-weight: 500;
+  margin-right: 10px;
+}
+
+.btn-form:hover
+{
+  transition: .5s;
+  color: #ffffff;
+  border-color: #00FF99;
+}
+
+.selecao
+{
+  color: #212121;
+  font-weight: 400;
+}
+
+.label-form
+{
+  margin-right: 10px;
+  margin-top: 10px;
+}
