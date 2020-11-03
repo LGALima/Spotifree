@@ -1,7 +1,6 @@
 <?php 
     include '../models/Musica.model.php';
     $idAlbum = $_GET['idAlbum'];
-    $idUsuario = $_GET['idUsuario'];
 
     require_once('./sql.php');
     $sql = new Sql();
@@ -14,10 +13,6 @@
     WHERE m.id_album=:idAlbum;', 
     [':idAlbum'], [$idAlbum]);
 
-    $musicasLike = $sql->query('SELECT * //
-    FROM musicas_like
-    WHERE id_usuario = :idUsuario',
-     [':idUsuario'], [$idUsuario]);//
     $musicasJson = [];
     foreach($musicas as $musica) {
         $musicaJson = new Musica();
@@ -35,12 +30,6 @@
         $musicaJson->album->artista->imagemArtista = $musica->imagem_artista;
         $musicaJson->idLike = -1;
 
-        foreach($musicasLike as $mLike) { //
-            if($musicaJson->id == $mLike->id_musica) {
-                $musicaJson->idLike = $mLike->id_like;
-                break;
-            }
-        }
         array_push($musicasJson, $musicaJson);
     }
 

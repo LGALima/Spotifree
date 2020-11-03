@@ -1,11 +1,3 @@
-<?php
-  // require_once('../api/sql.php');
-  // $sql = new Sql();
-  // $artistas = $sql->query('SELECT id_artista, artista FROM artistas ORDER BY artista',[],[]);
-  // $albuns = $sql->query('SELECT id_artista, id_album, titulo_album FROM albuns',[],[]);
-  // $musicas = $sql->query('SELECT id_arlbum, id_musica, musica FROM musicas',[],[]);
-?>
-          
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -62,7 +54,7 @@
             <div class="input-group pt-2 file-upload">
               <label for="imagem-artista">Imagem do artista:</label><br>
               <img id="imagem-foto-artista" style="width: 100%;max-width:100%; height:auto;"> <!-- Imagem selecionada ou do artista selecionado -->
-              <input type="file" id="imagem-artista" onchange="carregarFotoArtista(this)" disabled> <!-- Selecionador de imagem -->
+              <input type="file" id="imagem-artista" onchange="carregarFotoArtista(this)" class="mt-2" disabled> <!-- Selecionador de imagem -->
             </div>
 
           </form>
@@ -86,7 +78,7 @@
           <!-- itens do artista --> 
           </div>
         </div>
-        <div class="row p-3 dropdown">
+        <div class="row px-3 pt-2 pb-3 dropdown">
           <button class="col-12 btn btn-dropd dropdown-toggle" type="button" id="dropd-albuns" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" disabled>
           Álbuns</button>
           <div class="dropdown-menu col-12" id="dropdown-albuns" aria-labelledby="dropdownButton">
@@ -110,7 +102,7 @@
             <div class="input-group pt-3 file-upload">
               <label for="capa-album">Capa do álbum:</label><br>
               <img id="imagem-foto-album" style="width: 100%;max-width:100%; height:auto;"> <!-- Imagem selecionada ou do album selecionado -->
-              <input type="file" id="capa-album" onchange="carregarFotoAlbum(this)" disabled>
+              <input type="file" id="capa-album" onchange="carregarFotoAlbum(this)" class="mt-2" disabled>
             </div>
           </form>
         </div>
@@ -126,15 +118,32 @@
           <button type="button" onclick="acaoEditar('musica')" class="btn-form mt-2" id="btn-edt-mus"><i class="fas fa-edit"></i> Editar</button>
           <button type="button" onclick="acaoRemover('musica')" class="btn-form mt-2" id="btn-rem-mus"><i class="fas fa-trash-alt"></i> Remover</button>
         </div>
-        <div class="row p-3 dropdown">
+        <div class="row px-3 pt-3 dropdown">
+          <button class="col-12 btn btn-dropd dropdown-toggle" type="button" id="dropd-artistas-musicas" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" disabled>
+          Artistas</button>
+          <div class="dropdown-menu col-12" id="dropdown-artistas-musicas" aria-labelledby="dropdownButton">
+            <!-- itens do artista --> 
+          </div>
+        </div>
+        <div class="row px-3 pt-2 dropdown">
+          <button class="col-12 btn btn-dropd dropdown-toggle" type="button" id="dropd-albuns-musicas" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" disabled>
+          Álbuns</button>
+          <div class="dropdown-menu col-12" id="dropdown-albuns-musicas" aria-labelledby="dropdownButton">
+            <!-- itens do album --> 
+          </div>
+        </div>
+        <div class="row px-3 pt-2 pb-3 pdropdown">
           <button class="col-12 btn btn-dropd dropdown-toggle" type="button" id="dropd-musicas" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" disabled>
           Músicas</button>
-          <div class="dropdown-menu col-12" aria-labelledby="dropdownButton">
-            <p class="dropdown-item" onclick=""></p>
+          <div class="dropdown-menu col-12" id="dropdown-musicas" aria-labelledby="dropdownButton">
+            <!-- itens da musica --> 
           </div>
         </div>
         <div class="row area-selecao">
-          <p class="selecao">Álbum selecionado: <span id="selecao-album-dois"></span></p>
+          <p class="selecao">Artista selecionado: <span id="selecao-artista-musica"></span></p>
+        </div>
+        <div class="row area-selecao">
+          <p class="selecao">Álbum selecionado: <span id="selecao-album-musica"></span></p>
         </div>
         <div class="row area-selecao">
           <p class="selecao">Música selecionada: <span id="selecao-musica"></span></p>
@@ -145,13 +154,14 @@
               <input type="text" id="nome-musica" name="nome-musica" class="form-control bg-light btn-outline-secondary" placeholder="Nome da música." required disabled>
             </div>
             <div class="input-group pt-2 file-upload">
-              <label for="arquivo-musica">Música:</label><br>
-              <input type="file" id="arquivo-musica" disabled>
+                <label for="arquivo-musica">Música:</label>
+                <audio style="width: 100%;" controls id="audio-musica"></audio> <br>
+              <input type="file" id="arquivo-musica" onchange="carregarMusica(this)" class="mt-2" disabled>
             </div>
           </form>
         </div>
         <div class="row col-12 p-4 area-btn justify-content-center">
-          <button type="submit" onclick="" class="btn-form mt-2"><i class="fas fa-save"></i> Salvar</button>
+          <button type="submit"id="btn-salvar-musica" class="btn-form mt-2"><i class="fas fa-save"></i> Salvar</button>
           <button type="reset" onclick="acaoCancelar('musica')" class="btn-form mt-2"><i class="fas fa-times"></i> Cancelar</button>
         </div>
       </div>

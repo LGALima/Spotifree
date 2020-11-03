@@ -13,6 +13,8 @@
     $_SESSION['idUsuario']=$usuario->id_usuario;
     $_SESSION['email']=$usuario->email;
     $_SESSION['premium']=$usuario->premium;
+    $_SESSION['genero'] = $usuario->genero;
+    $_SESSION['foto'] = $usuario->foto;
 
     header("location:../player/audio.php");
   }

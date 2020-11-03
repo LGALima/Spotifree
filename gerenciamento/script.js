@@ -1,4 +1,4 @@
-let artistaAtual, escolhaBotaoArtista, escolhaBotaoAlbum, escolhaBotaoMusica, escolhaFuncao;
+let artistaAtual, escolhaBotaoArtista, escolhaBotaoAlbum, escolhaBotaoMusica;
 const url = 'http://localhost/Spotifree/player/api/';
 
 // coisas artista
@@ -28,9 +28,29 @@ let btnAlbumSalvar = document.getElementById('btn-salvar-album');
 let idArtistaAlbumSelecionado;
 let idAlbumSelecionado;
 
+//coisas musicas
+let dropdownArtistasMusicas = document.getElementById('dropd-artistas-musicas');
+let dropdownAlbunsMusicas = document.getElementById('dropd-albuns-musicas');
+let dropdownMusicas = document.getElementById('dropd-musicas');
+let selecaoArtistaMusicas = document.getElementById('selecao-artista-musica');
+let selecaoAlbumMusicas = document.getElementById('selecao-album-musica');
+let selecaoMusica = document.getElementById('selecao-musica');
+let tituloMusica = document.getElementById('nome-musica');
+let inputMusica = document.getElementById('arquivo-musica');
+let itensDropdownArtistasMusicas = document.getElementById('dropdown-artistas-musicas');
+let itensDropdownAlbunsMusicas = document.getElementById('dropdown-albuns-musicas');
+let itensDropdownMusicas = document.getElementById('dropdown-musicas');
+let audioMusica = document.getElementById('audio-musica');
+
+let btnMusicaSalvar = document.getElementById('btn-salvar-musica');
+
+let idArtistaMusicaSelecionado;
+let idAlbumMusicaSelecionado;
+let idMusicaSelecionado;
+
+
 function acaoAdicionar(opcao)
 {
-  escolhaFuncao = 1;
   let idDropdown, idNome, idFile, idSelecao, idBtnEditar, idBtnRemover;
   if(opcao == 'artista')
   {
@@ -59,9 +79,10 @@ function acaoAdicionar(opcao)
   else if(opcao == 'musica')
   {
     escolhaBotaoMusica = 1;
-    document.getElementById('dropd-artistas').disabled = false;
-    document.getElementById('dropd-albuns').disabled = false;
-    document.getElementById('dropd-albuns').focus();
+    dropdownArtistasMusicas.disabled = false;
+    dropdownAlbunsMusicas.disabled = false;
+    dropdownArtistasMusicas.focus();
+    document.getElementById('dropd-musicas').focus();
     idDropdown = 'dropd-musicas';
     idNome = 'nome-musica';
     idFile = 'arquivo-musica';
@@ -79,7 +100,6 @@ function acaoAdicionar(opcao)
 
 function acaoEditar(opcao)
 {
-  escolhaFuncao = 2;
   let idNome, idFile, idBtnAdicionar, idBtnRemover;
   if(opcao == 'artista')
   {
@@ -106,10 +126,10 @@ function acaoEditar(opcao)
   else if(opcao == 'musica')
   {
     escolhaBotaoMusica = 2;
-    document.getElementById('dropd-artistas').disabled = false;
-    document.getElementById('dropd-albuns').disabled = false;
-    document.getElementById('dropd-musicas').disabled = false;
-    document.getElementById('dropd-albuns').focus();
+    dropdownArtistasMusicas.disabled = false;
+    dropdownAlbunsMusicas.disabled = false;
+    dropdownMusicas.disabled = false;
+    dropdownArtistasMusicas.focus();
     idNome = 'nome-musica';
     idFile = 'arquivo-musica';
     idBtnAdicionar = 'btn-adc-mus';
@@ -123,7 +143,6 @@ function acaoEditar(opcao)
 
 function acaoRemover(opcao)
 {
-  escolhaFuncao = 3;
   let idNome, idFile, idBtnAdicionar, idBtnEditar;
   if(opcao == 'artista')
   {
@@ -150,10 +169,10 @@ function acaoRemover(opcao)
   else if(opcao == 'musica')
   {
     escolhaBotaoMusica = 3;
-    document.getElementById('dropd-artistas').disabled = false;
-    document.getElementById('dropd-albuns').disabled = false;
-    document.getElementById('dropd-musicas').disabled = false;
-    document.getElementById('dropd-albuns').focus();
+    dropdownArtistasMusicas.disabled = false;
+    dropdownAlbunsMusicas.disabled = false;
+    dropdownMusicas.disabled = false;
+    dropdownArtistasMusicas.focus();
     idNome = 'nome-musica';
     idFile = 'arquivo-musica';
     idBtnAdicionar = 'btn-adc-mus';
@@ -194,6 +213,7 @@ function acaoCancelar(opcao)
     idBtnEditar = 'btn-edt-alb';
     idBtnRemover = 'btn-rem-alb';
     idAlbumSelecionado = null;
+    idArtistaAlbumSelecionado = null;
     imgAlbum.src = '';
     inputImgAlbum.value = '';
     selecaoArtistaAlbum.innerText = '';
@@ -201,15 +221,26 @@ function acaoCancelar(opcao)
   }
   else if(opcao == 'musica')
   {
-    document.getElementById('dropd-artistas').disabled = true;
-    document.getElementById('dropd-albuns').disabled = true;
-    document.getElementById('dropd-musicas').disabled = true;
+    dropdownArtistasMusicas.disabled = true;
+    dropdownAlbunsMusicas.disabled = true;
+    dropdownMusicas.disabled = true;
+    audioMusica.src = '';
     idNome = 'nome-musica';
     idFile = 'arquivo-musica';
     idSelecao = 'selecao-musica';
     idBtnAdicionar = 'btn-adc-mus';
     idBtnEditar = 'btn-edt-mus';
     idBtnRemover = 'btn-rem-mus';
+    idMusicaSelecionado = null;
+    idAlbumMusicaSelecionado = null;
+    idArtistaMusicaSelecionado = null;
+    selecaoArtistaMusicas.innerText = '';
+    selecaoAlbumMusicas.innerText = '';
+    selecaoMusica.innerText = '';
+    itensDropdownAlbunsMusicas.innerHTML = '';
+    itensDropdownMusicas.innerHTML = '';
+    inputMusica.value = '';
+    inputMusica.src = '';
   }
   document.getElementById(idBtnAdicionar).disabled = false;
   document.getElementById(idBtnEditar).disabled = false;
@@ -241,6 +272,7 @@ function gerarItensDropdownArtista()
   let artistas = buscarArtistas();
   dropdownArtistas.innerHTML = '';
   dropdownItensArtistasAlbuns.innerHTML = '';
+  itensDropdownArtistasMusicas.innerHTML = '';
 
   artistas.forEach(artista => {
 
@@ -264,6 +296,17 @@ function gerarItensDropdownArtista()
     })
 
     dropdownItensArtistasAlbuns.appendChild(itemDropdownArtistasAlbum);
+    //dropdown artistas musicas
+    let itemDropdownArtistasMusicas = document.createElement('p');
+    itemDropdownArtistasMusicas.classList.add('dropdown-item');
+    itemDropdownArtistasMusicas.innerText = artista.artista;
+
+    itemDropdownArtistasMusicas.addEventListener('click', function ()
+    {
+      selecionarArtistaMostrarAlbunsSecaoMusica(artista);
+    })
+    
+    itensDropdownArtistasMusicas.appendChild(itemDropdownArtistasMusicas);
   });
 }
 
@@ -489,7 +532,7 @@ btnAlbumSalvar.addEventListener('click', function ()
   {
     let album = {};
     album.idArtista = idArtistaAlbumSelecionado;
-    album.id = idAlbumSelecionado
+    album.id = idAlbumSelecionado;
     album.titulo = nomeAlbum.value;
     album.lancamento = anoLancamentoAlbum.value;
     album.capa = imgAlbum.src.split(',')[1];
@@ -503,4 +546,180 @@ btnAlbumSalvar.addEventListener('click', function ()
       removerAlbum(idAlbumSelecionado);
     }
   }
-})
+});
+
+// Fim todas as operações com albuns
+
+//todas as operações com musicas
+function selecionarArtistaMostrarAlbunsSecaoMusica(artista)
+{
+  let albuns = getAlbunsPorArtista(artista);
+  itensDropdownAlbunsMusicas.innerHTML = '';
+  selecaoArtistaMusicas.innerText = artista.artista;
+  idArtistaMusicaSelecionado = artista.id;
+  console.log(albuns);
+  albuns.forEach(album =>
+  {
+    let itemAlbum = document.createElement('p');
+    itemAlbum.classList.add('dropdown-item');
+    itemAlbum.innerText = album.titulo;
+
+    itemAlbum.addEventListener('click', function ()
+    {
+      mostrarMusicasPorAlbum(album);
+    })
+    
+    itensDropdownAlbunsMusicas.appendChild(itemAlbum);
+  })
+}
+
+function getMusicasPorAlbum(album)
+{
+  let xmlhttp = new XMLHttpRequest();
+  let resposta;
+  xmlhttp.onreadystatechange = function () {
+    if(this.readyState == 4 && this.status == 200) 
+    {
+      console.log(xmlhttp.responseText);
+      resposta = JSON.parse(xmlhttp.responseText);
+    }
+  }
+  xmlhttp.open('GET', url + 'getMusicasPorAlbumSemLikes?idAlbum=' + album.id, false);
+  xmlhttp.send();
+  return resposta;
+}
+
+function mostrarMusicasPorAlbum(album)
+{
+  let musicas = getMusicasPorAlbum(album);
+  itensDropdownMusicas.innerHTML = '';
+  selecaoAlbumMusicas.innerText = album.titulo;
+  idAlbumMusicaSelecionado = album.id;
+  console.log(musicas);
+  musicas.forEach(musica =>
+  {
+    let itemMusica = document.createElement('p');
+    itemMusica.classList.add('dropdown-item');
+    itemMusica.innerText = musica.titulo;
+
+    itemMusica.addEventListener('click', function ()
+    {
+      selecionarMusica(musica);
+    })
+    
+    itensDropdownMusicas.appendChild(itemMusica);
+  })
+}
+
+function selecionarMusica(musica)
+{
+  idMusicaSelecionado = musica.id;
+  selecaoMusica.innerText = musica.titulo;
+  tituloMusica.value = musica.titulo;
+  audioMusica.src = 'data:audio/mpeg;base64,' + musica.musica;
+}
+
+function carregarMusica(input)
+{
+  if(input.files && input.files[0])
+  {
+    var reader = new FileReader();
+
+    reader.onload = function (e)
+    {
+      audioMusica.src = e.target.result;
+    }
+
+    reader.readAsDataURL(input.files[0]);
+  }
+}
+
+function adicionarMusica(musica)
+{
+  let xmlhttp = new XMLHttpRequest();
+  
+  xmlhttp.onreadystatechange = function () {
+    if(this.readyState == 4 && this.status == 200) {
+      alert('Música adicionada com sucesso!');
+      gerarItensDropdownArtista();
+      acaoCancelar('musica');
+      acaoAdicionar('musica');
+    }
+  }
+
+  xmlhttp.open('POST', url + 'postNovaMusica');
+  xmlhttp.send(JSON.stringify(musica));
+}
+
+function editarMusica(musica)
+{
+  let xmlhttp = new XMLHttpRequest();
+  
+  xmlhttp.onreadystatechange = function () {
+    if(this.readyState == 4 && this.status == 200) {
+      alert('Música editada com sucesso!');
+      gerarItensDropdownArtista();
+      acaoCancelar('musica');
+      acaoEditar('musica');
+    }
+  }
+
+  xmlhttp.open('POST', url + 'putMusica');
+  xmlhttp.send(JSON.stringify(musica));
+}
+
+function removerMusica(idMusica)
+{
+  let xmlhttp = new XMLHttpRequest();
+  
+  xmlhttp.onreadystatechange = function () {
+    if(this.readyState == 4 && this.status == 200) {
+      alert('Música removida com sucesso!');
+      gerarItensDropdownArtista();
+      acaoCancelar('musica');
+      acaoRemover('musica');
+    }
+  }
+
+  xmlhttp.open('GET', url + 'deleteMusica?idMusica=' + idMusica);
+  xmlhttp.send();
+}
+
+btnMusicaSalvar.addEventListener('click', function ()
+{
+  if(escolhaBotaoMusica == 1)
+  {
+    let musica = {};
+    musica.idAlbum = idAlbumMusicaSelecionado;
+    musica.titulo = tituloMusica.value;
+    musica.musica = audioMusica.src.split(',')[1];
+    
+    let minutos = Number.parseInt(audioMusica.duration/60);
+    let segundos = Number.parseInt(audioMusica.duration%60);
+    segundos = segundos < 10 ? '0' + segundos : segundos;
+    musica.tempo = minutos + ':' + segundos;
+
+    adicionarMusica(musica);
+  }
+  else if(escolhaBotaoMusica == 2)
+  {
+    let musica = {};
+    musica.id = idMusicaSelecionado;
+    musica.titulo = tituloMusica.value;
+    musica.musica = audioMusica.src.split(',')[1];
+    
+    let minutos = Number.parseInt(audioMusica.duration/60);
+    let segundos = Number.parseInt(audioMusica.duration%60);
+    segundos = segundos < 10 ? '0' + segundos : segundos;
+    musica.tempo = minutos + ':' + segundos;
+
+    editarMusica(musica);
+  }
+  else if(escolhaBotaoMusica == 3)
+  {
+    if(confirm('Deseja remover a música ' + tituloMusica.value + '?'))
+    {
+      removerMusica(idMusicaSelecionado);
+    }
+  }
+});

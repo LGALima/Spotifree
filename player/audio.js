@@ -1,6 +1,7 @@
 const url = 'http://localhost/Spotifree/player/api/';
 
 let htmlTelaPerfil = document.getElementById('tela-perfil');
+let htmlTelaPerfilEditar = document.getElementById('tela-perfil-editar');
 let htmlTelaArtistas = document.getElementById('tela-artistas');
 let htmlArtistas = document.getElementById('artistas');
 let htmlTelaPaginaArtista = document.getElementById('tela-pagina-artista');
@@ -28,12 +29,12 @@ let btnPesquisarArtistas = document.getElementById('btn-pesquisar-artistas')
 let criarPlaylistInputCapa = document.getElementById('criar-playlist-input-capa');
 let criarPlaylistCapa = document.getElementById('criar-playlist-img');
 
-let fotoPerfil = document.getElementById('foto-perfil');
-let fotoPerfilInput = document.getElementById('foto-perfil-input');
+let fotoPerfil = document.getElementById('foto-perfil-editar');
+let fotoPerfilInput = document.getElementById('foto-perfil-editar-input');
 
-function formatarNumeroComPonto(x) {
-    return x.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, "\.");
-}
+// Recuperar a foto do usuario da sessão
+document.getElementById('foto-perfil').src = fotoUsuarioSessao ? 'data:image/jpeg;base64,' + fotoUsuarioSessao : "../img/user.png";
+document.getElementById('foto-perfil-header').src = fotoUsuarioSessao ? 'data:image/jpeg;base64,' + fotoUsuarioSessao : "../img/user.png";
 
 function selecionarMenu(elemento) {
     htmlMenuMusicasFavoritas.classList.remove('menu-selecionado');
@@ -153,3 +154,76 @@ function carregarFotoPerfil(input) {
 fotoPerfil.addEventListener('click', () => {
     fotoPerfilInput.click();
 });
+
+document.getElementById('btn-editar-perfil').addEventListener('click', () => {
+    htmlTelaPerfilEditar.scrollIntoView();
+});
+
+// Perfil
+
+let botaoEditarPerfil = document.getElementById('btn-editar-perfil');
+let botaoTrocarPlanoPerfil = document.getElementById('btn-trocar-plano');
+let botaoSalvarPerfil = document.getElementById('btn-salvar-perfil');
+let botaoRemoverPerfil = document.getElementById('btn-remover-perfil');
+let inputNomePerfilEditar = document.getElementById('input-editar-perfil-nome');
+let inputEmailPerfilEditar = document.getElementById('input-editar-perfil-email');
+
+botaoTrocarPlanoPerfil.addEventListener('click', () => {
+    alert('clickei');
+});
+
+botaoEditarPerfil.addEventListener('click', () => {
+    atualizarDadosUsuarioSessao();
+    inputNomePerfilEditar.value = usuarioSessao.nome;
+    inputEmailPerfilEditar.value = usuarioSessao.email;
+    fotoPerfil.src = fotoUsuarioSessao ? 'data:image/jpeg;base64,' + fotoUsuarioSessao : "../img/user.png"
+});
+
+botaoSalvarPerfil.addEventListener('click', () => {
+    let nome = inputNomePerfilEditar.value; 
+    let email = inputEmailPerfilEditar.value;
+    let foto = fotoPerfil.src.split(',')[1];
+    if(!nome || !email) {
+        alert('Preencha os dados corretamente');
+    } else {
+        let senha = prompt('Confirme sua senha');
+        putUsuario(nome, email, foto, senha);
+    }
+});
+
+botaoRemoverPerfil.addEventListener('click', () => {
+    let excluir = confirm('Deseja realmente excluir seu perfil?');
+    if(excluir) {
+        let senha = prompt('Confirme sua senha!');
+        deleteUsuario(senha);
+    }
+});
+
+function putUsuario(nome, email, foto, senha) {
+    let xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+            let status = xhttp.responseText;
+            if(status == 'sucesso') {
+                window.location.href = 'http://localhost/Spotifree/login/login.php?email=' + email + '&senha=' + senha;
+            } else {
+                alert('Erro ao atualizar perfil!');
+            }
+        }
+    }
+    let urlPost = url + "putUsuario?idUsuario=" + idUsuario;
+    let parametros = { // Criar json com os dados e o base64
+        'nome': nome,
+        'email': email,
+        'foto': foto,
+        'senha': senha
+    };
+    
+    xhttp.open("POST", urlPost);
+    xhttp.setRequestHeader('Content-type', 'application/json'); // Para enviar imagem e musicas vai ser assim
+    xhttp.send(JSON.stringify(parametros));
+}
+
+function deleteUsuario(senha) {
+    window.location.href = url + "deleteUsuario?idUsuario=" + idUsuario + '&senha=' + senha;
+} 
