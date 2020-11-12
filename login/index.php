@@ -1,3 +1,10 @@
+<?php
+session_start();
+$erro = isset($_SESSION['erroLoginUsuario']) ? $_SESSION['erroLoginUsuario'] : null;
+unset($_SESSION['erroLoginUsuario']);
+?>
+
+
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -21,13 +28,18 @@
         </div>
         <hr>
         <h2 class="big d-block text-center main-txt">Para continuar, faça login no Spotifree.</h2>
-        <form action="login.php" method="GET" id="formulario-login" name="formulario-login"> 
+        <form action="login.php" method="GET" id="formulario-login" name="formulario-login">
           <div class="input-group mt-2">
             <input id="email" name="email" type="email" class="form-control bg-light btn-outline-secondary" placeholder="Endereço de-mail." required>
           </div>
           <div class="input-group mt-2">
             <input id="senha" name="senha" type="password" class="form-control bg-light btn-outline-secondary" placeholder="Senha." required>
           </div>
+          <?php if (isset($erro)) {?>
+            <div class="label-group text-danger">
+              <?php echo $erro?>
+            </div>
+            <?php }?>
           <div class="row">
             <div class="col-md-12 entrar-section">
               <button type="submit" class="btn-login mt-2">Entrar</button>
@@ -38,7 +50,7 @@
         <div class="cadastro-section">
           Não tem uma conta?
           <div class="button-area">
-            <a class="btn btn-cadastro" href="../cadastro/index.html">Inscrever-se no Spotifree</a>
+            <a class="btn btn-cadastro" href="../cadastro/index.php">Inscrever-se no Spotifree</a>
           </div>
         </div>
       </div>

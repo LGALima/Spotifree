@@ -1,3 +1,11 @@
+<?php 
+session_start();
+if (!isset($_SESSION['idUsuario']) || 
+!isset($_SESSION['adm']) || 
+$_SESSION['adm'] != 'S') {
+    header("location:../login/index.php");
+}
+?>
 <!DOCTYPE html>
 <html lang="pt-br">
 

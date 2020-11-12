@@ -2,7 +2,7 @@
 session_start();
 
 if (!isset($_SESSION['idUsuario'])) {
-    header("location:../login/index.html");
+    header("location:../login/index.php");
 } else {
     $idUsuario = $_SESSION['idUsuario'];
     $nome = $_SESSION['nome'];
@@ -64,7 +64,7 @@ if (!isset($_SESSION['idUsuario'])) {
             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                 <a class="dropdown-item" id="menu-perfil">Perfil</a>
                 <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="#">Log out</a>
+                <a class="dropdown-item" href="api/logout.php">Log out</a>
             </div>
         </div>
     </div>

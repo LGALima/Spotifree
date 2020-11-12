@@ -1,3 +1,10 @@
+<?php
+session_start();
+$erro = isset($_SESSION['erroCadastroUsuario']) ? $_SESSION['erroCadastroUsuario'] : null;
+unset($_SESSION['erroCadastroUsuario']);
+
+?>
+
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -20,7 +27,7 @@
           <img src="img/logo.png" alt="Logo Spotifree" class="d-block img-link" onclick="window.location.href='../home/index.html'">
         </div>
         <h2 class="big d-block text-center main-txt">Inscreva-se grátis e comece a curtir.</h2>
-        <form action="../api/insertUsuario.php" method="POST" id="formulario-cadastro" name="formulario-cadastro"> 
+        <form action="../api/insertUsuario.php" method="POST" id="formulario-cadastro" name="formulario-cadastro">
           <div class="label-group">
             <label for="email">Qual é o seu e-mail?</label>
           </div>
@@ -34,7 +41,7 @@
             <input id="senha" name="senha" type="password" class="form-control bg-light btn-outline-secondary" placeholder="Crie uma senha." required minlength="8">
           </div>
           <div class="label-group">
-           <label for="nome">Como devemos chamar você?</label>
+            <label for="nome">Como devemos chamar você?</label>
           </div>
           <div class="input-group mt-2">
             <input id="nome" name="nome" type="text" class="form-control bg-light btn-outline-secondary" placeholder="Insira seu nome." required>
@@ -49,12 +56,19 @@
             </div>
             <input type="radio" id="feminino" name="genero" value="feminino" required>
             <div class="rdb-label">
-             <label for="female">Feminino</label>
+              <label for="female">Feminino</label>
             </div>
             <input type="radio" id="outro" name="genero" value="outro" required>
             <div class="rdb-label">
               <label for="other">Outro</label>
             </div>
+
+
+            <?php if (isset($erro)) {?>
+            <div class="label-group text-danger">
+              <?php echo $erro?>
+            </div>
+            <?php }?>
           </div>
           <div class="row">
             <div class="col-md-12">
@@ -63,7 +77,7 @@
           </div>
         </form>
         <div class="login-section">
-          Já tem uma conta? <a href="../login/index.html">Faça login</a>.
+          Já tem uma conta? <a href="../login/index.php">Faça login</a>.
         </div>
       </div>
     </div>
